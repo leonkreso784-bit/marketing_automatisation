@@ -94,6 +94,8 @@ export const SiteSchema = z.object({
   text: z.string(),
 });
 
+export const SourceSchema = z.object({ title: z.string(), url: z.string() });
+
 export const ReportSchema = z.object({
   id: z.string(),
   createdAt: z.string(),
@@ -101,8 +103,10 @@ export const ReportSchema = z.object({
   source: z.enum(["web", "mcp", "demo"]),
   durationMs: z.number().optional(),
   site: SiteSchema.omit({ text: true }),
-  seoScore: z.number(),
+  // null when the site blocks automated reading and no technical audit was possible
+  seoScore: z.number().nullable(),
   seoChecks: z.array(SeoCheckSchema),
+  sources: z.array(SourceSchema).default([]),
   brand: BrandSchema,
   seo: SeoAiSchema,
   plan: PlanSchema,
@@ -118,12 +122,13 @@ export type Ads = z.infer<typeof AdsSchema>;
 export type SeoCheck = z.infer<typeof SeoCheckSchema>;
 export type Site = z.infer<typeof SiteSchema>;
 export type Report = z.infer<typeof ReportSchema>;
+export type Source = z.infer<typeof SourceSchema>;
 export type Lang = "hr" | "en";
 
-export type StepId = "scrape" | "brand" | "seo" | "plan" | "posts" | "ads" | "done";
+export type StepId = "research" | "scrape" | "brand" | "seo" | "plan" | "posts" | "ads" | "done";
 
 export type RunEvent =
-  | { type: "step"; step: StepId; status: "running" | "done" | "error"; ms?: number; error?: string }
+  | { type: "step"; step: StepId; status: "running" | "done" | "error" | "skipped"; ms?: number; error?: string }
   | { type: "data"; key: keyof Report; value: unknown }
   | { type: "complete"; report: Report }
   | { type: "fatal"; error: string };

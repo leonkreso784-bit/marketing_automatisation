@@ -43,3 +43,6 @@ next-env.d.ts
 # MCP reports
 /reports
 /.playwright-mcp
+
+.vercel
+.env*

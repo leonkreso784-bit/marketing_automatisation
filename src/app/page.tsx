@@ -7,20 +7,32 @@ import { ReportView } from "@/components/ReportView";
 import { t } from "@/lib/i18n";
 import type { Lang, Report, RunEvent, StepId } from "@/lib/schemas";
 
-const STEP_IDS: StepId[] = ["scrape", "brand", "seo", "plan", "posts", "ads", "done"];
+const STEP_IDS: StepId[] = ["research", "scrape", "brand", "seo", "plan", "posts", "ads", "done"];
 const idle = () => Object.fromEntries(STEP_IDS.map((s) => [s, { status: "idle" }])) as Record<StepId, StepState>;
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 
+function accessCode() {
+  const fromLink = new URLSearchParams(window.location.search).get("kod");
+  if (fromLink) localStorage.setItem("stagemedia-kod", fromLink);
+  return localStorage.getItem("stagemedia-kod") ?? "";
+}
+
 export default function Home() {
-  const [lang, setLang] = useState<Lang>("hr");
+  const [lang, setLangState] = useState<Lang>("hr");
   const [url, setUrl] = useState("");
   const [phase, setPhase] = useState<"start" | "running" | "done" | "error">("start");
   const [steps, setSteps] = useState(idle);
   const [report, setReport] = useState<Partial<Report>>({});
   const [error, setError] = useState("");
   const [elapsed, setElapsed] = useState(0);
+  const [translating, setTranslating] = useState(false);
   const startRef = useRef(0);
   const d = t[lang];
+
+  useEffect(() => {
+    document.documentElement.lang = lang;
+    document.title = `StageMedia · ${t[lang].tagline}`;
+  }, [lang]);
 
   useEffect(() => {
     if (phase !== "running") return;
@@ -50,22 +62,41 @@ export default function Home() {
     setPhase("running");
   }
 
+  // Switching language also switches the finished report, so the whole page is in one language.
+  async function setLang(next: Lang) {
+    setLangState(next);
+    if (phase !== "done" || !report.lang || report.lang === next) return;
+    const full = report as Report;
+    if (full.source === "demo") {
+      const res = await fetch(`/demo-report-${next}.json`);
+      setReport({ ...((await res.json()) as Report), durationMs: full.durationMs });
+      return;
+    }
+    setTranslating(true);
+    try {
+      const res = await fetch("/api/translate", {
+        method: "POST",
+        headers: { "content-type": "application/json", "x-access-code": accessCode() },
+        body: JSON.stringify({ report: full, lang: next }),
+      });
+      if (res.ok) setReport((await res.json()) as Report);
+    } finally {
+      setTranslating(false);
+    }
+  }
+
   async function run(ev?: React.FormEvent) {
     ev?.preventDefault();
     if (!url.trim()) return;
     reset();
     try {
-      const fromLink = new URLSearchParams(window.location.search).get("kod");
-      if (fromLink) localStorage.setItem("stagemedia-kod", fromLink);
       const res = await fetch("/api/run", {
         method: "POST",
-        headers: { "content-type": "application/json", "x-access-code": localStorage.getItem("stagemedia-kod") ?? "" },
+        headers: { "content-type": "application/json", "x-access-code": accessCode() },
         body: JSON.stringify({ url, lang }),
       });
-      if (!res.ok || !res.body) {
-        const body = (await res.json().catch(() => ({}))) as { error?: string };
-        throw new Error(body.error ?? `HTTP ${res.status}`);
-      }
+      if (res.status === 401) throw new Error("access");
+      if (!res.ok || !res.body) throw new Error("generic");
       const reader = res.body.getReader();
       const dec = new TextDecoder();
       let buf = "";
@@ -78,7 +109,7 @@ export default function Home() {
         for (const line of lines) if (line.trim()) handle(JSON.parse(line));
       }
     } catch (err) {
-      setError(String((err as Error).message));
+      setError((err as Error).message === "access" ? "access" : "generic");
       setPhase("error");
     }
   }
@@ -95,7 +126,10 @@ export default function Home() {
       handle({ type: "step", step: id, status: "done", ms });
       setReport((r) => ({ ...r, ...data }));
     };
-    await step("scrape", 1800, { site: saved.site, seoScore: saved.seoScore, seoChecks: saved.seoChecks });
+    await Promise.all([
+      step("research", 5200, { sources: saved.sources }),
+      step("scrape", 1800, { site: saved.site, seoScore: saved.seoScore, seoChecks: saved.seoChecks }),
+    ]);
     await step("brand", 6500, { brand: saved.brand });
     await Promise.all([
       step("seo", 7200, { seo: saved.seo }),
@@ -109,11 +143,13 @@ export default function Home() {
   }
 
   const started = phase !== "start";
+  const errorText = error === "access" ? d.accessError : (d.errors[error] ?? d.errors.generic);
 
   return (
     <div className="min-h-screen">
-      <Header lang={lang} setLang={phase === "running" ? undefined : setLang}>
-        {phase === "done" && (
+      <Header lang={lang} setLang={phase === "running" || translating ? undefined : setLang}>
+        {translating && <span className="animate-pulse text-sm text-ink/60">{d.translating}</span>}
+        {phase === "done" && !translating && (
           <button onClick={() => window.print()} className="rounded-full border border-ink/25 px-4 py-1.5 text-sm hover:bg-white">
             {d.pdf}
           </button>
@@ -135,7 +171,7 @@ export default function Home() {
           )}
           <form onSubmit={run} className={`flex max-w-3xl flex-col gap-3 sm:flex-row ${started ? "" : "mt-10"}`}>
             <label className="sr-only" htmlFor="url">
-              URL
+              {d.placeholder}
             </label>
             <input
               id="url"
@@ -169,6 +205,7 @@ export default function Home() {
                   onClick={() => {
                     setPhase("start");
                     setUrl("");
+                    setSteps(idle());
                   }}
                   className="mt-6 text-sm text-sea underline underline-offset-4"
                 >
@@ -177,12 +214,11 @@ export default function Home() {
               )}
             </aside>
 
-            <div className="min-w-0 print-full">
+            <div className={`min-w-0 print-full ${translating ? "opacity-50" : ""}`}>
               {phase === "error" && (
                 <div role="alert" className="mb-8 rounded-lg border border-flag/40 bg-flag/10 p-4">
                   <p className="font-semibold text-flag">{d.error}</p>
-                  <p className="text-sm">{error}</p>
-                  <p className="mt-1 text-sm text-ink/70">{d.errorHint}</p>
+                  <p className="text-sm break-words">{errorText}</p>
                 </div>
               )}
               {report.site && (
@@ -193,11 +229,11 @@ export default function Home() {
                   )}
                   <div className="min-w-0">
                     <p className="truncate font-display text-3xl font-semibold">{report.brand?.businessName ?? report.site.title}</p>
-                    <p className="truncate text-sm text-ink/55">{report.site.url}</p>
+                    {report.site.url && <p className="truncate text-sm text-ink/55">{report.site.url}</p>}
                   </div>
                 </div>
               )}
-              <ReportView report={report} d={d} />
+              {phase !== "error" && <ReportView report={report} d={d} />}
             </div>
           </div>
         )}

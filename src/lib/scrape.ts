@@ -16,12 +16,29 @@ export interface RawPage {
   html: string;
 }
 
+/** True when the input looks like a web address rather than a business name. */
+export function looksLikeUrl(input: string): boolean {
+  const s = input.trim();
+  if (/^https?:\/\//i.test(s)) return true;
+  return !/\s/.test(s) && /^[\w-]+(\.[\w-]+)+(\/.*)?$/i.test(s);
+}
+
+/** Normalises a pasted link: adds https, drops ad-tracking query strings and #fragments. */
 export function normalizeUrl(input: string): string {
   let u = input.trim();
   if (!/^https?:\/\//i.test(u)) u = "https://" + u;
   const parsed = new URL(u);
   if (!["http:", "https:"].includes(parsed.protocol)) throw new Error("Invalid URL");
+  parsed.search = "";
+  parsed.hash = "";
   return parsed.toString();
+}
+
+/** Short, human-readable reason a site could not be read. */
+export class ScrapeError extends Error {
+  constructor(public reason: "blocked" | "notfound" | "unreachable" | "notallowed" | "nothtml", detail: string) {
+    super(detail);
+  }
 }
 
 // Only public (global unicast) addresses are allowed. IPv4-mapped IPv6 is unwrapped
@@ -73,7 +90,8 @@ async function fetchHtml(url: string): Promise<string> {
       });
     } catch (err) {
       const cause = (err as { cause?: Error }).cause;
-      throw new Error(cause?.message?.startsWith("Address not allowed") ? cause.message : `Could not load ${new URL(current).hostname}`);
+      if (cause?.message?.startsWith("Address not allowed")) throw new ScrapeError("notallowed", cause.message);
+      throw new ScrapeError("unreachable", `Could not load ${new URL(current).hostname}`);
     }
     const location = res.headers.get("location");
     if (res.status >= 300 && res.status < 400 && location) {
@@ -82,10 +100,12 @@ async function fetchHtml(url: string): Promise<string> {
     }
     break;
   }
-  if (!res || (res.status >= 300 && res.status < 400)) throw new Error(`Too many redirects for ${url}`);
-  if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
+  if (!res || (res.status >= 300 && res.status < 400)) throw new ScrapeError("unreachable", `Too many redirects for ${url}`);
+  if (res.status === 404 || res.status === 410) throw new ScrapeError("notfound", `HTTP ${res.status}`);
+  if (res.status === 401 || res.status === 403 || res.status === 429 || res.status === 400) throw new ScrapeError("blocked", `HTTP ${res.status}`);
+  if (!res.ok) throw new ScrapeError("unreachable", `HTTP ${res.status}`);
   const type = res.headers.get("content-type") ?? "";
-  if (!type.includes("html")) throw new Error(`Not an HTML page: ${url}`);
+  if (!type.includes("html")) throw new ScrapeError("nothtml", "Not an HTML page");
   return await readCapped(res);
 }
 
@@ -129,8 +149,17 @@ function pageText($: cheerio.CheerioAPI): string {
 }
 
 export async function scrapeSite(input: string): Promise<{ site: Site; home: RawPage }> {
-  const url = normalizeUrl(input);
-  const html = await fetchHtml(url);
+  let url = normalizeUrl(input);
+  let html: string;
+  try {
+    html = await fetchHtml(url);
+  } catch (err) {
+    // A deep link that fails (404, moved) often still has a readable home page.
+    const origin = new URL(url).origin + "/";
+    if (url === origin || (err instanceof ScrapeError && err.reason === "notallowed")) throw err;
+    url = origin;
+    html = await fetchHtml(url);
+  }
   const home: RawPage = { url, html };
   const $ = cheerio.load(html);
 

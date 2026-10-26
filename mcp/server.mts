@@ -11,8 +11,8 @@ import { fileURLToPath } from "node:url";
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import { z } from "zod";
-import { AdsSchema, BrandSchema, PlanSchema, PostsSchema, SeoAiSchema, type Report } from "../src/lib/schemas";
-import { normalizeUrl, scrapeSite } from "../src/lib/scrape";
+import { AdsSchema, BrandSchema, PlanSchema, PostsSchema, SeoAiSchema, SourceSchema, type Report } from "../src/lib/schemas";
+import { normalizeUrl, scrapeSite, ScrapeError } from "../src/lib/scrape";
 import { auditSeo } from "../src/lib/seo";
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
@@ -30,12 +30,22 @@ async function getSite(url: string) {
   return hit;
 }
 
+/** Like getSite, but returns null when the site blocks automated reading. */
+async function tryGetSite(url: string) {
+  try {
+    return await getSite(url);
+  } catch {
+    return null;
+  }
+}
+
 const server = new McpServer(
   { name: "stagemedia", version: "1.0.0" },
   {
-    instructions: `StageMedia marketing autopilot. To build a marketing package for a client's website:
-1. Call procitaj_web_stranicu with the URL.
-2. From what it returns, write the brand analysis, SEO advice, a 2-week content plan (10 items), 3 ready posts (Instagram Reel, Instagram Carousel, Facebook Post) and 3 ads (2 Meta, 1 Google). Be specific to the business, no generic filler.
+    instructions: `StageMedia marketing autopilot. To build a marketing package for a client (given as a link or just a name):
+1. Research the business with your own web search: official site, reviews (Google, TripAdvisor, Booking), social media, competitors.
+   Then call procitaj_web_stranicu with the official URL for the technical SEO audit and images. If it says the site blocks reading, continue with your research.
+2. From all of it, write the brand analysis, SEO advice, a 2-week content plan (10 items), 3 ready posts (Instagram Reel, Instagram Carousel, Facebook Post) and 3 ads (2 Meta, 1 Google). Be specific to the business, no generic filler.
 3. Call spremi_marketinski_paket with all of it, then give the user the report link.`,
   },
 );
@@ -52,7 +62,21 @@ server.registerTool(
     },
   },
   async ({ url, lang }) => {
-    const { site, home } = await getSite(url);
+    let scraped;
+    try {
+      scraped = await getSite(url);
+    } catch (err) {
+      const reason = err instanceof ScrapeError ? err.reason : "unreachable";
+      return {
+        content: [
+          {
+            type: "text",
+            text: `The site could not be read (${reason}). Continue with your own web research; spremi_marketinski_paket will still work without a technical SEO audit.`,
+          },
+        ],
+      };
+    }
+    const { site, home } = scraped;
     const audit = auditSeo(home, lang);
     return {
       content: [
@@ -70,10 +94,11 @@ server.registerTool(
   {
     title: "Spremi marketinški paket",
     description:
-      "Saves the finished marketing package (brand, SEO advice, content plan, posts, ads) as a report and returns a link that opens it in the StageMedia web app. Call procitaj_web_stranicu first. Hashtags without the # sign.",
+      "Saves the finished marketing package (brand, SEO advice, content plan, posts, ads) as a report and returns a link that opens it in the StageMedia web app. Hashtags without the # sign. Pass the web pages you used as sources.",
     inputSchema: {
-      url: z.string(),
+      url: z.string().describe("The client's official website"),
       lang: z.enum(["hr", "en"]).default("hr"),
+      sources: z.array(SourceSchema).default([]).describe("Web pages you read while researching"),
       brand: BrandSchema,
       seo: SeoAiSchema,
       plan: PlanSchema,
@@ -81,11 +106,12 @@ server.registerTool(
       ads: AdsSchema,
     },
   },
-  async ({ url, lang, brand, seo, plan, posts, ads }) => {
-    const { site, home } = await getSite(url);
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { text: _text, ...siteMeta } = site;
-    const audit = auditSeo(home, lang);
+  async ({ url, lang, sources, brand, seo, plan, posts, ads }) => {
+    const scraped = await tryGetSite(url);
+    const siteMeta = scraped
+      ? (({ text: _text, ...meta }) => meta)(scraped.site) // eslint-disable-line @typescript-eslint/no-unused-vars
+      : { url: normalizeUrl(url), title: brand.businessName, metaDescription: "", lang: "", headings: [], images: [], socials: [], pagesRead: 0, wordCount: 0 };
+    const audit = scraped ? auditSeo(scraped.home, lang) : { score: null, checks: [] };
     const report: Report = {
       id: `mcp-${crypto.randomUUID().slice(0, 8)}`,
       createdAt: new Date().toISOString(),
@@ -94,6 +120,7 @@ server.registerTool(
       site: siteMeta,
       seoScore: audit.score,
       seoChecks: audit.checks,
+      sources,
       brand,
       seo,
       plan,

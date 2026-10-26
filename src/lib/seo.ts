@@ -19,14 +19,14 @@ export function auditSeo(page: RawPage, lang: Lang): { score: number; checks: Se
       weight: 15,
       hr: "Naslov stranice (title)",
       en: "Page title",
-      test: () => [title.length >= 30 && title.length <= 65, `${title.length} ${lang === "hr" ? "znakova" : "chars"}`],
+      test: () => [title.length >= 30 && title.length <= 65, `${title.length} / 30–65`],
     },
     {
       id: "meta",
       weight: 15,
       hr: "Meta opis",
       en: "Meta description",
-      test: () => [desc.length >= 70 && desc.length <= 165, desc ? `${desc.length} ${lang === "hr" ? "znakova" : "chars"}` : lang === "hr" ? "nedostaje" : "missing"],
+      test: () => [desc.length >= 70 && desc.length <= 165, desc ? `${desc.length} / 70–165` : "—"],
     },
     {
       id: "h1",
@@ -40,7 +40,7 @@ export function auditSeo(page: RawPage, lang: Lang): { score: number; checks: Se
       weight: 12,
       hr: "Alt tekst na slikama",
       en: "Image alt text",
-      test: () => [imgs.length === 0 || noAlt / imgs.length < 0.2, `${noAlt}/${imgs.length} ${lang === "hr" ? "bez alt-a" : "missing alt"}`],
+      test: () => [imgs.length === 0 || noAlt / imgs.length < 0.2, `${imgs.length - noAlt}/${imgs.length}`],
     },
     {
       id: "https",
@@ -54,7 +54,7 @@ export function auditSeo(page: RawPage, lang: Lang): { score: number; checks: Se
       weight: 10,
       hr: "Prilagođeno mobitelu",
       en: "Mobile viewport",
-      test: () => [$('meta[name="viewport"]').length > 0, $('meta[name="viewport"]').length ? "OK" : lang === "hr" ? "nedostaje" : "missing"],
+      test: () => [$('meta[name="viewport"]').length > 0, $('meta[name="viewport"]').length ? "OK" : "—"],
     },
     {
       id: "og",
@@ -63,7 +63,7 @@ export function auditSeo(page: RawPage, lang: Lang): { score: number; checks: Se
       en: "Open Graph (social sharing)",
       test: () => {
         const ok = $('meta[property="og:title"]').length > 0 && $('meta[property="og:image"]').length > 0;
-        return [ok, ok ? "OK" : lang === "hr" ? "nepotpuno" : "incomplete"];
+        return [ok, ok ? "OK" : "—"];
       },
     },
     {
@@ -73,7 +73,7 @@ export function auditSeo(page: RawPage, lang: Lang): { score: number; checks: Se
       en: "Language attribute",
       test: () => {
         const l = $("html").attr("lang");
-        return [Boolean(l), l ?? (lang === "hr" ? "nedostaje" : "missing")];
+        return [Boolean(l), l ?? ("—")];
       },
     },
     {
@@ -81,7 +81,7 @@ export function auditSeo(page: RawPage, lang: Lang): { score: number; checks: Se
       weight: 6,
       hr: "Canonical link",
       en: "Canonical link",
-      test: () => [$('link[rel="canonical"]').length > 0, $('link[rel="canonical"]').length ? "OK" : lang === "hr" ? "nedostaje" : "missing"],
+      test: () => [$('link[rel="canonical"]').length > 0, $('link[rel="canonical"]').length ? "OK" : "—"],
     },
     {
       id: "schema",
@@ -90,7 +90,7 @@ export function auditSeo(page: RawPage, lang: Lang): { score: number; checks: Se
       en: "Structured data (Schema.org)",
       test: () => {
         const n = $('script[type="application/ld+json"]').length;
-        return [n > 0, n ? `${n} ${lang === "hr" ? "blok(a)" : "block(s)"}` : lang === "hr" ? "nema" : "none"];
+        return [n > 0, n ? `${n}` : "—"];
       },
     },
   ];

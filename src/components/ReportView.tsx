@@ -115,31 +115,37 @@ function Gauge({ score }: { score: number }) {
 function SeoBlock({ r, d }: { r: Partial_; d: Dict }) {
   return (
     <div className="grid gap-8 md:grid-cols-[auto_1fr]">
-      <div className="flex flex-col items-center gap-1">
-        {r.seoScore !== undefined ? <Gauge score={r.seoScore} /> : <div className="h-32 w-32 animate-pulse rounded-full bg-mist" />}
-        <span className="text-sm text-ink/60">{d.seoScore}</span>
-      </div>
-      <div>
-        <h3 className="mb-2 font-semibold">{d.checks}</h3>
-        {r.seoChecks ? (
-          <ul className="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
-            {r.seoChecks.map((c) => (
-              <li key={c.id} className="flex items-center gap-2">
-                <span
-                  className={`grid h-5 w-5 shrink-0 place-items-center rounded-full text-xs text-white ${c.pass ? "bg-laurel" : "bg-flag"}`}
-                  aria-label={c.pass ? "OK" : "!"}
-                >
-                  {c.pass ? "✓" : "!"}
-                </span>
-                <span>{c.label}</span>
-                <span className="ml-auto text-ink/50">{c.detail}</span>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <Skeleton />
-        )}
-      </div>
+      {r.seoScore === null ? (
+        <p className="rounded-lg bg-sun/20 p-4 text-sm md:col-span-2">{d.seoUnavailable}</p>
+      ) : (
+        <>
+          <div className="flex flex-col items-center gap-1">
+            {r.seoScore !== undefined ? <Gauge score={r.seoScore} /> : <div className="h-32 w-32 animate-pulse rounded-full bg-mist" />}
+            <span className="text-sm text-ink/60">{d.seoScore}</span>
+          </div>
+          <div>
+            <h3 className="mb-2 font-semibold">{d.checks}</h3>
+            {r.seoChecks ? (
+              <ul className="grid gap-x-6 gap-y-1 text-sm sm:grid-cols-2">
+                {r.seoChecks.map((c) => (
+                  <li key={c.id} className="flex items-center gap-2">
+                    <span
+                      className={`grid h-5 w-5 shrink-0 place-items-center rounded-full text-xs text-white ${c.pass ? "bg-laurel" : "bg-flag"}`}
+                      aria-label={c.pass ? "OK" : "!"}
+                    >
+                      {c.pass ? "✓" : "!"}
+                    </span>
+                    <span>{d.checkLabels[c.id] ?? c.label}</span>
+                    <span className="ml-auto text-ink/50 tabular-nums">{c.detail}</span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Skeleton />
+            )}
+          </div>
+        </>
+      )}
 
       <div className="md:col-span-2">
         {r.seo ? (
@@ -357,10 +363,29 @@ function AdsBlock({ r, d }: { r: Partial_; d: Dict }) {
   );
 }
 
+function SourcesBlock({ r, d }: { r: Partial_; d: Dict }) {
+  if (!r.sources?.length) return null;
+  return (
+    <Section title={d.sources}>
+      <ul className="grid gap-x-8 gap-y-2 text-sm sm:grid-cols-2">
+        {r.sources.map((s) => (
+          <li key={s.url} className="min-w-0">
+            <a href={s.url} target="_blank" rel="noopener noreferrer" className="block truncate text-sea hover:underline">
+              {s.title || s.url}
+            </a>
+            <span className="block truncate text-xs text-ink/45">{host(s.url)}</span>
+          </li>
+        ))}
+      </ul>
+    </Section>
+  );
+}
+
 export function ReportView({ report, d }: { report: Partial_; d: Dict }) {
+  const read = report.site?.pagesRead ? d.pagesRead(report.site.pagesRead, report.site.wordCount) : "";
   return (
     <div className="space-y-14">
-      <Section title={d.brand} aside={report.site && <span className="text-sm text-ink/50">{d.pagesRead(report.site.pagesRead, report.site.wordCount)}</span>}>
+      <Section title={d.brand} aside={read && <span className="text-sm text-ink/50">{read}</span>}>
         <BrandBlock r={report} d={d} />
       </Section>
       <Section title={d.seo}>
@@ -375,6 +400,7 @@ export function ReportView({ report, d }: { report: Partial_; d: Dict }) {
       <Section title={d.ads}>
         <AdsBlock r={report} d={d} />
       </Section>
+      <SourcesBlock r={report} d={d} />
     </div>
   );
 }
