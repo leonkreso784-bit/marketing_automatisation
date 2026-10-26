@@ -1,6 +1,8 @@
-import { lookup } from "node:dns/promises";
+import dns, { type LookupAddress } from "node:dns";
 import { isIP } from "node:net";
 import * as cheerio from "cheerio";
+import ipaddr from "ipaddr.js";
+import { Agent, fetch, type Response } from "undici";
 import type { Site } from "./schemas";
 
 const UA =
@@ -22,45 +24,57 @@ export function normalizeUrl(input: string): string {
   return parsed.toString();
 }
 
-function isPrivateIp(ip: string): boolean {
-  const v4 = ip.startsWith("::ffff:") ? ip.slice(7) : ip;
-  if (isIP(v4) === 4) {
-    const [a, b] = v4.split(".").map(Number);
-    return (
-      a === 0 || a === 10 || a === 127 ||
-      (a === 100 && b >= 64 && b <= 127) ||
-      (a === 169 && b === 254) ||
-      (a === 172 && b >= 16 && b <= 31) ||
-      (a === 192 && b === 168) ||
-      a >= 224
-    );
-  }
-  const l = ip.toLowerCase();
-  return l === "::" || l === "::1" || l.startsWith("fe8") || l.startsWith("fe9") || l.startsWith("fea") || l.startsWith("feb") || l.startsWith("fc") || l.startsWith("fd");
+// Only public (global unicast) addresses are allowed. IPv4-mapped IPv6 is unwrapped
+// first; every other special range (private, loopback, link-local, NAT64, 6to4...) is denied.
+function isPublicIp(ip: string): boolean {
+  if (!ipaddr.isValid(ip)) return false;
+  return ipaddr.process(ip).range() === "unicast";
 }
 
-// Only fetch public websites: block localhost, private networks and cloud metadata addresses.
-async function assertPublicHost(url: string) {
+// Runs inside the connection itself, so the address we check is the address we connect to
+// (no gap for DNS rebinding between checking and fetching).
+function safeLookup(
+  hostname: string,
+  options: dns.LookupOptions,
+  cb: (err: NodeJS.ErrnoException | null, address: string | LookupAddress[], family?: number) => void,
+) {
+  dns.lookup(hostname, { ...options, all: true }, (err, addrs) => {
+    if (err) return cb(err, "");
+    if (addrs.length === 0 || !addrs.every((a) => isPublicIp(a.address))) {
+      return cb(Object.assign(new Error(`Address not allowed: ${hostname}`), { code: "EBLOCKED" }), "");
+    }
+    if (options.all) cb(null, addrs);
+    else cb(null, addrs[0].address, addrs[0].family);
+  });
+}
+
+const agent = new Agent({ connect: { lookup: safeLookup as never } });
+
+function assertAllowedUrl(url: string) {
   const { hostname, protocol, port } = new URL(url);
   if (!["http:", "https:"].includes(protocol)) throw new Error("Invalid URL");
   if (port && !["80", "443"].includes(port)) throw new Error(`Port not allowed: ${port}`);
   const host = hostname.replace(/^\[|\]$/g, "");
-  const addrs = isIP(host) ? [{ address: host }] : await lookup(host, { all: true });
-  if (addrs.length === 0 || addrs.some((a) => isPrivateIp(a.address))) {
-    throw new Error(`Address not allowed: ${hostname}`);
-  }
+  // IP literals skip DNS lookup, so check them here.
+  if (isIP(host) && !isPublicIp(host)) throw new Error(`Address not allowed: ${hostname}`);
 }
 
 async function fetchHtml(url: string): Promise<string> {
   let current = url;
   let res: Response | undefined;
   for (let hop = 0; hop < 5; hop++) {
-    await assertPublicHost(current);
-    res = await fetch(current, {
-      headers: { "user-agent": UA, "accept-language": "hr,en;q=0.8" },
-      redirect: "manual",
-      signal: AbortSignal.timeout(15000),
-    });
+    assertAllowedUrl(current);
+    try {
+      res = await fetch(current, {
+        headers: { "user-agent": UA, "accept-language": "hr,en;q=0.8" },
+        redirect: "manual",
+        signal: AbortSignal.timeout(15000),
+        dispatcher: agent,
+      });
+    } catch (err) {
+      const cause = (err as { cause?: Error }).cause;
+      throw new Error(cause?.message?.startsWith("Address not allowed") ? cause.message : `Could not load ${new URL(current).hostname}`);
+    }
     const location = res.headers.get("location");
     if (res.status >= 300 && res.status < 400 && location) {
       current = new URL(location, current).toString();
