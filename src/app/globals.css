@@ -1,26 +1,83 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-ink: #13232e;
+  --color-sea: #1a5b78;
+  --color-sea-deep: #0f3448;
+  --color-laurel: #4b7a56;
+  --color-stone: #f1f3f2;
+  --color-mist: #dfe5e6;
+  --color-sun: #f2b533;
+  --color-flag: #c9473a;
+  --font-display: var(--font-bricolage);
+  --font-sans: var(--font-figtree);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-stone);
+  color: var(--color-ink);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-sea);
+  outline-offset: 2px;
+}
+
+/* pipeline flow line */
+@keyframes flow {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 0 24px;
+  }
+}
+.flow-line {
+  background-image: linear-gradient(to bottom, var(--color-sun) 50%, transparent 50%);
+  background-size: 2px 12px;
+  animation: flow 0.6s linear infinite;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+.reveal {
+  animation: reveal 0.45s ease-out both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .flow-line,
+  .reveal,
+  .animate-spin,
+  .animate-pulse {
+    animation: none !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  html,
+  body {
+    background: white;
+  }
+  section {
+    break-inside: avoid-page;
+  }
+  .print-full {
+    grid-column: 1 / -1 !important;
+  }
 }
