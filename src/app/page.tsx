@@ -55,12 +55,17 @@ export default function Home() {
     if (!url.trim()) return;
     reset();
     try {
+      const fromLink = new URLSearchParams(window.location.search).get("kod");
+      if (fromLink) localStorage.setItem("stagemedia-kod", fromLink);
       const res = await fetch("/api/run", {
         method: "POST",
-        headers: { "content-type": "application/json" },
+        headers: { "content-type": "application/json", "x-access-code": localStorage.getItem("stagemedia-kod") ?? "" },
         body: JSON.stringify({ url, lang }),
       });
-      if (!res.body) throw new Error(`HTTP ${res.status}`);
+      if (!res.ok || !res.body) {
+        const body = (await res.json().catch(() => ({}))) as { error?: string };
+        throw new Error(body.error ?? `HTTP ${res.status}`);
+      }
       const reader = res.body.getReader();
       const dec = new TextDecoder();
       let buf = "";

@@ -6,8 +6,13 @@ import { auditSeo } from "@/lib/seo";
 export const maxDuration = 300;
 
 export async function POST(req: Request) {
+  // Optional shared access code so a public link can't burn through the API key.
+  const code = process.env.ACCESS_CODE;
+  if (code && req.headers.get("x-access-code") !== code) {
+    return Response.json({ error: "Access code required" }, { status: 401 });
+  }
   const { url, lang = "hr" } = (await req.json()) as { url?: string; lang?: Lang };
-  if (!url) return Response.json({ error: "url is required" }, { status: 400 });
+  if (!url || url.length > 500) return Response.json({ error: "url is required" }, { status: 400 });
 
   const stream = new ReadableStream({
     async start(controller) {

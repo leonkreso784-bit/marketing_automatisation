@@ -1,3 +1,5 @@
+import { lookup } from "node:dns/promises";
+import { isIP } from "node:net";
 import * as cheerio from "cheerio";
 import type { Site } from "./schemas";
 
@@ -20,16 +22,78 @@ export function normalizeUrl(input: string): string {
   return parsed.toString();
 }
 
+function isPrivateIp(ip: string): boolean {
+  const v4 = ip.startsWith("::ffff:") ? ip.slice(7) : ip;
+  if (isIP(v4) === 4) {
+    const [a, b] = v4.split(".").map(Number);
+    return (
+      a === 0 || a === 10 || a === 127 ||
+      (a === 100 && b >= 64 && b <= 127) ||
+      (a === 169 && b === 254) ||
+      (a === 172 && b >= 16 && b <= 31) ||
+      (a === 192 && b === 168) ||
+      a >= 224
+    );
+  }
+  const l = ip.toLowerCase();
+  return l === "::" || l === "::1" || l.startsWith("fe8") || l.startsWith("fe9") || l.startsWith("fea") || l.startsWith("feb") || l.startsWith("fc") || l.startsWith("fd");
+}
+
+// Only fetch public websites: block localhost, private networks and cloud metadata addresses.
+async function assertPublicHost(url: string) {
+  const { hostname, protocol, port } = new URL(url);
+  if (!["http:", "https:"].includes(protocol)) throw new Error("Invalid URL");
+  if (port && !["80", "443"].includes(port)) throw new Error(`Port not allowed: ${port}`);
+  const host = hostname.replace(/^\[|\]$/g, "");
+  const addrs = isIP(host) ? [{ address: host }] : await lookup(host, { all: true });
+  if (addrs.length === 0 || addrs.some((a) => isPrivateIp(a.address))) {
+    throw new Error(`Address not allowed: ${hostname}`);
+  }
+}
+
 async function fetchHtml(url: string): Promise<string> {
-  const res = await fetch(url, {
-    headers: { "user-agent": UA, "accept-language": "hr,en;q=0.8" },
-    redirect: "follow",
-    signal: AbortSignal.timeout(15000),
-  });
+  let current = url;
+  let res: Response | undefined;
+  for (let hop = 0; hop < 5; hop++) {
+    await assertPublicHost(current);
+    res = await fetch(current, {
+      headers: { "user-agent": UA, "accept-language": "hr,en;q=0.8" },
+      redirect: "manual",
+      signal: AbortSignal.timeout(15000),
+    });
+    const location = res.headers.get("location");
+    if (res.status >= 300 && res.status < 400 && location) {
+      current = new URL(location, current).toString();
+      continue;
+    }
+    break;
+  }
+  if (!res || (res.status >= 300 && res.status < 400)) throw new Error(`Too many redirects for ${url}`);
   if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
   const type = res.headers.get("content-type") ?? "";
   if (!type.includes("html")) throw new Error(`Not an HTML page: ${url}`);
-  return await res.text();
+  return await readCapped(res);
+}
+
+const MAX_BYTES = 3 * 1024 * 1024;
+
+async function readCapped(res: Response): Promise<string> {
+  if (Number(res.headers.get("content-length") ?? 0) > MAX_BYTES) throw new Error("Page is too large");
+  if (!res.body) return "";
+  const reader = res.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const { value, done } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > MAX_BYTES) {
+      await reader.cancel();
+      break; // keep what we have; the start of the page is what matters
+    }
+    chunks.push(value);
+  }
+  return new TextDecoder().decode(Buffer.concat(chunks));
 }
 
 function abs(base: string, href: string | undefined): string | undefined {
