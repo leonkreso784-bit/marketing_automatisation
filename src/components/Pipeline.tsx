@@ -16,8 +16,7 @@ export function clock(ms: number) {
 }
 
 function Dot({ s }: { s: StepState }) {
-  if (s.status === "done")
-    return <span className="grid h-6 w-6 place-items-center rounded-full bg-laurel text-xs text-white">✓</span>;
+  if (s.status === "done") return <span className="grid h-6 w-6 place-items-center rounded-full bg-laurel text-xs text-white">✓</span>;
   if (s.status === "running")
     return (
       <span className="grid h-6 w-6 place-items-center rounded-full bg-sun">
@@ -46,7 +45,19 @@ function Connector({ active }: { active: boolean }) {
   return <div className={`ml-[11px] h-5 w-0.5 ${active ? "flow-line" : "bg-ink/15"}`} />;
 }
 
-export function Pipeline({ steps, d, elapsed, finished }: { steps: Record<StepId, StepState>; d: Dict; elapsed: number; finished: boolean }) {
+export function Pipeline({
+  steps,
+  d,
+  elapsed,
+  finished,
+  compact = false,
+}: {
+  steps: Record<StepId, StepState>;
+  d: Dict;
+  elapsed: number;
+  finished: boolean;
+  compact?: boolean;
+}) {
   const parallelActive = PARALLEL.some((p) => steps[p].status === "running");
   return (
     <div>
@@ -62,16 +73,18 @@ export function Pipeline({ steps, d, elapsed, finished }: { steps: Record<StepId
       <Connector active={false} />
       <Row id="done" s={steps.done} d={d} />
 
-      <dl className="mt-8 grid grid-cols-2 gap-4 border-t border-ink/15 pt-4">
-        <div>
-          <dt className="text-xs text-ink/55">{d.manual}</dt>
-          <dd className="font-display text-2xl text-ink/45 line-through decoration-flag/70">{d.manualValue}</dd>
-        </div>
-        <div>
-          <dt className="text-xs text-ink/55">{d.automated}</dt>
-          <dd className={`font-display text-2xl font-semibold tabular-nums ${finished ? "text-laurel" : ""}`}>{clock(elapsed)}</dd>
-        </div>
-      </dl>
+      {!compact && (
+        <dl className="mt-8 grid grid-cols-2 gap-4 border-t border-ink/15 pt-4">
+          <div>
+            <dt className="text-xs text-ink/55">{d.manual}</dt>
+            <dd className="font-display text-2xl text-ink/45 line-through decoration-flag/70">{d.manualValue}</dd>
+          </div>
+          <div>
+            <dt className="text-xs text-ink/55">{d.automated}</dt>
+            <dd className={`font-display text-2xl font-semibold tabular-nums ${finished ? "text-laurel" : ""}`}>{clock(elapsed)}</dd>
+          </div>
+        </dl>
+      )}
     </div>
   );
 }

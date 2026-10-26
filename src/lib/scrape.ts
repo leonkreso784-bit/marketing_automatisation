@@ -121,7 +121,11 @@ function abs(base: string, href: string | undefined): string | undefined {
 
 function pageText($: cheerio.CheerioAPI): string {
   $("script, style, noscript, svg, iframe").remove();
-  return $("body").text().replace(/\s+/g, " ").trim();
+  const full = $("body").text().replace(/\s+/g, " ").trim();
+  // Menus and footers repeat on every subpage; drop them unless the site puts its content there.
+  $("nav, footer, [role=navigation]").remove();
+  const main = $("body").text().replace(/\s+/g, " ").trim();
+  return main.split(" ").length >= 150 ? main : full;
 }
 
 export async function scrapeSite(input: string): Promise<{ site: Site; home: RawPage }> {

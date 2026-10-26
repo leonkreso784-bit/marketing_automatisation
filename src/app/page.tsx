@@ -123,10 +123,15 @@ export default function Home() {
       <main className="mx-auto max-w-7xl px-5 pb-24 md:px-8">
         <div className={`no-print transition-all ${started ? "pt-2 pb-8" : "pt-16 pb-20 md:pt-28"}`}>
           {!started && (
-            <>
-              <h1 className="max-w-4xl font-display text-5xl leading-[1.02] font-semibold tracking-tight md:text-7xl">{d.heroTitle}</h1>
-              <p className="mt-6 max-w-2xl text-lg text-ink/70">{d.heroSub}</p>
-            </>
+            <div className="grid items-end gap-12 lg:grid-cols-[1fr_17rem]">
+              <div>
+                <h1 className="max-w-4xl font-display text-5xl leading-[1.02] font-semibold tracking-tight md:text-7xl">{d.heroTitle}</h1>
+                <p className="mt-6 max-w-2xl text-lg text-ink/70">{d.heroSub}</p>
+              </div>
+              <div className="hidden rounded-2xl border border-ink/10 bg-white p-5 lg:block" aria-hidden>
+                <Pipeline steps={steps} d={d} elapsed={0} finished={false} compact />
+              </div>
+            </div>
           )}
           <form onSubmit={run} className={`flex max-w-3xl flex-col gap-3 sm:flex-row ${started ? "" : "mt-10"}`}>
             <label className="sr-only" htmlFor="url">

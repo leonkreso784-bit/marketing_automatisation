@@ -1,0 +1,359 @@
+{
+  "id": "a73800a8",
+  "createdAt": "2026-10-26T15:23:34.094Z",
+  "lang": "hr",
+  "source": "demo",
+  "durationMs": 53193,
+  "site": {
+    "url": "https://bevanda.hr/",
+    "title": "Bevanda Opatija - Hotel, Restoran, Bar",
+    "metaDescription": "Bevanda Opatija je jedinstveno mjesto na Jadranu: Boutique hotel s pet zvjezdica, Restoran i Bar s pogledom na more.",
+    "lang": "hr",
+    "headings": [
+      "Hotel Bevanda",
+      "Restoran Bevanda",
+      "Otkrijte jedinstvene ponude posebno pripremljene za Vaš čisti užitak",
+      "Bevanda nije samo hotel, to su uspomene u nastajanju",
+      "Bevanda je uvijek bila i ostala - jedinstveni Jadran",
+      "Amore Sea Club",
+      "Boutique Hotel",
+      "Restoran Bevanda",
+      "Amore Sea Club",
+      "Događanja"
+    ],
+    "images": [
+      "https://bevanda.hr/images/Bevanda-hotel-desktop-1.webp",
+      "https://bevanda.hr/images/Dorucak-1.webp",
+      "https://bevanda.hr/images/Superior-double-room.webp",
+      "https://bevanda.hr/images/Bevanda-avg-2023---Photo-Dean-Dubokovi%C4%8D-in-Nejc-Pernek-160.webp",
+      "https://bevanda.hr/images/Bevanda-restoran8.webp",
+      "https://bevanda.hr/images/Bevanda-avg-2023---Photo-Dean-Dubokovi%C4%8D-in-Nejc-Pernek-168.webp",
+      "https://bevanda.hr/images/Bevanda-hp-1.jpg",
+      "https://bevanda.hr/images/Bevanda-desktop-slide-2.webp"
+    ],
+    "logo": "https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg",
+    "socials": [],
+    "pagesRead": 3,
+    "wordCount": 2444
+  },
+  "seoScore": 68,
+  "seoChecks": [
+    {
+      "id": "title",
+      "label": "Naslov stranice (title)",
+      "pass": true,
+      "detail": "38 znakova"
+    },
+    {
+      "id": "meta",
+      "label": "Meta opis",
+      "pass": true,
+      "detail": "116 znakova"
+    },
+    {
+      "id": "h1",
+      "label": "Jedan H1 naslov",
+      "pass": false,
+      "detail": "6 × H1"
+    },
+    {
+      "id": "alt",
+      "label": "Alt tekst na slikama",
+      "pass": true,
+      "detail": "5/48 bez alt-a"
+    },
+    {
+      "id": "https",
+      "label": "HTTPS",
+      "pass": true,
+      "detail": "OK"
+    },
+    {
+      "id": "viewport",
+      "label": "Prilagođeno mobitelu",
+      "pass": true,
+      "detail": "OK"
+    },
+    {
+      "id": "og",
+      "label": "Open Graph (dijeljenje na mrežama)",
+      "pass": false,
+      "detail": "nepotpuno"
+    },
+    {
+      "id": "lang",
+      "label": "Oznaka jezika",
+      "pass": true,
+      "detail": "hr"
+    },
+    {
+      "id": "canonical",
+      "label": "Canonical link",
+      "pass": false,
+      "detail": "nedostaje"
+    },
+    {
+      "id": "schema",
+      "label": "Strukturirani podaci (Schema.org)",
+      "pass": false,
+      "detail": "nema"
+    }
+  ],
+  "brand": {
+    "businessName": "Bevanda Opatija",
+    "oneLiner": "Prvi boutique hotel s pet zvjezdica na sjevernom Jadranu, restoran od 1971. i Amore Sea Club na vlastitoj rivi.",
+    "industry": "Luksuzni boutique hotel, fine dining restoran i bar uz more",
+    "location": "Opatija, Kvarner, Hrvatska",
+    "audiences": [
+      {
+        "name": "Imućni parovi iz DACH regije",
+        "description": "Austrijanci, Nijemci i Talijani od 40 do 65 godina koji traže intiman luksuz. Žele jacuzzi s pogledom na Kvarner, à la carte doručak i sobu s pričom, a ne hotelski lanac."
+      },
+      {
+        "name": "Gastro i vinski hedonisti",
+        "description": "Gosti iz Zagreba, Ljubljane i Rijeke koji dolaze vikendom zbog kvarnerskih škampi i više od 750 vinskih etiketa. Spajaju večeru u restoranu s noćenjem kad nema gužve."
+      },
+      {
+        "name": "Organizatori vjenčanja i poslovnih događanja",
+        "description": "Mladenci i HR timovi koji traže jednu adresu za sve: restoran, 10 soba i rivu od 70 metara za intimna vjenčanja, domjenke i team buildinge uz DJ-a."
+      }
+    ],
+    "toneOfVoice": [
+      "elegantan",
+      "topao",
+      "hedonistički",
+      "pripovjedački",
+      "samouvjeren"
+    ],
+    "usps": [
+      "Prvi boutique hotel s pet zvjezdica na sjevernom Jadranu, član kolekcije IMPRESIA",
+      "10 soba nazvanih po slavnim gostima Opatije, od Joycea do Puccinija",
+      "Vinski podrum s više od 750 etiketa pod paskom sommeliera Klaudija Jurčića",
+      "Restoran od 1971. s panoramskim pogledom na Kvarnerski zaljev i svjetla Rijeke"
+    ],
+    "opportunities": [
+      "Stranica poziva goste da dijele dojmove na društvenim mrežama, a nigdje nema linka na profile. Rješenje je Instagram serija „10 soba, 10 ličnosti“ s pričama o Joyceu, Pucciniju i ostalim slavnim gostima.",
+      "Amore Sea Club i koncept Wine&Cork rade bez rezervacija i bez dress codea. Savršeni su za geotargetirane Meta oglase prema lokalcima iz Rijeke i Opatije za tjedne vinske večeri na rivi.",
+      "Ime Klaudija Jurčića i podrum s 750 etiketa idealni su za izvansezonske pakete s degustacijom i noćenjem. Te pakete treba gurati Google oglasima na njemačkom prema Austriji i Bavarskoj od listopada do travnja."
+    ]
+  },
+  "seo": {
+    "summary": "Bevanda ima rijetko jake adute: prvi boutique hotel s pet zvjezdica na sjevernom Jadranu, restoran od 1971. i 750 vinskih etiketa. Google ih slabo vidi jer nedostaju strukturirani podaci i canonical, a stranica ima šest H1 naslova.",
+    "recommendations": [
+      {
+        "issue": "Šest H1 naslova na početnoj stranici",
+        "fix": "Ostaviti jedan H1: „Bevanda Opatija – boutique hotel s pet zvjezdica, restoran i Amore Sea Club“. Naslove Hotel, Restoran, Amore Sea Club i Događanja prebaciti u H2.",
+        "impact": "high"
+      },
+      {
+        "issue": "Nema Schema.org podataka za hotel i restoran",
+        "fix": "Dodati JSON-LD za Hotel (starRating 5, adresa, check-in 16:00, pet friendly) i Restaurant (servesCuisine: mediteranska, link na jelovnik, rezervacija stola). Amore Sea Club označiti kao BarOrPub.",
+        "impact": "high"
+      },
+      {
+        "issue": "Nedostaju canonical i hreflang za HR, EN i DE",
+        "fix": "Svakoj stranici dodati self-canonical i hreflang oznake za hr, en i de. Njemačkim stranicama napisati vlastite naslove, npr. „Boutique Hotel Opatija 5 Sterne mit Whirlpool“, umjesto doslovnog prijevoda.",
+        "impact": "high"
+      },
+      {
+        "issue": "Lokalna vidljivost na Google Mapsu nije iskorištena",
+        "fix": "Urediti tri Google Business profila (Hotel, Restoran Bevanda, Amore Sea Club) s točnim kategorijama i fotografijama rive i jacuzzija. Dodati link na jelovnik i vinsku kartu te tjedno objavljivati Wine&Cork večeri.",
+        "impact": "medium"
+      },
+      {
+        "issue": "Nepotpun Open Graph, nema linkova na društvene mreže",
+        "fix": "Dodati og:title, og:description i og:image (terasa ili riva u zalasku sunca, 1200×630). U footer staviti linkove na Instagram i Facebook jer stranica već poziva goste da dijele dojmove.",
+        "impact": "medium"
+      }
+    ],
+    "suggestedTitle": "Bevanda Opatija – Boutique hotel 5*, restoran i Sea Club",
+    "suggestedMetaDescription": "Prvi boutique hotel s 5 zvjezdica na sjevernom Jadranu: 10 soba s terasom i pogledom na Kvarner, restoran od 1971. i 750 vina. Rezervirajte.",
+    "keywords": [
+      "boutique hotel Opatija",
+      "hotel Opatija 5 zvjezdica",
+      "restoran Opatija pogled na more",
+      "najbolji restoran Opatija",
+      "škampi Opatija",
+      "vjenčanje Opatija uz more",
+      "Hotel Opatija mit Whirlpool",
+      "wine bar Opatija"
+    ]
+  },
+  "plan": {
+    "strategy": "Studeni je u Opatiji tiši, ali Martinje (11. 11.) i Advent koji se bliži daju gostima razlog da dođu baš sada. Prvi tjedan gradimo priču oko podruma Klaudija Jurčića i martinjske večeri za goste iz Zagreba, Ljubljane i Rijeke. Paralelno pokrećemo seriju „10 soba, 10 ličnosti“ i guramo izvansezonske pakete za DACH goste te prosinačke domjenke.",
+    "pillars": [
+      "10 soba, 10 ličnosti – priče slavnih gostiju Opatije",
+      "Podrum s 750 etiketa i Martinje sa sommelierom Klaudijem Jurčićem",
+      "Kvarnerska kuhinja Restorana Bevanda od 1971.",
+      "Izvansezonski bijeg i događanja: paketi, domjenci, vjenčanja"
+    ],
+    "items": [
+      {
+        "day": "Pon 2",
+        "platform": "Instagram",
+        "format": "Carousel",
+        "topic": "„10 soba, 10 ličnosti“: soba Joyce i njegova opatijska priča",
+        "goal": "Pokrenuti seriju i rast pratitelja"
+      },
+      {
+        "day": "Uto 3",
+        "platform": "TikTok",
+        "format": "Reel",
+        "topic": "Klaudio Jurčić bira jedno vino od 750 etiketa za studeni",
+        "goal": "Doseg među gastro i vinskim hedonistima"
+      },
+      {
+        "day": "Čet 5",
+        "platform": "Facebook",
+        "format": "Post",
+        "topic": "Martinjska večer u Restoranu Bevanda: meni, mlado vino, pogled na zaljev",
+        "goal": "Rezervacije stolova za 11. studenoga"
+      },
+      {
+        "day": "Pet 6",
+        "platform": "Instagram",
+        "format": "Story",
+        "topic": "Anketa: crno ili bijelo za Martinje? Jurčić otkriva svoj izbor",
+        "goal": "Angažman i zagrijavanje za Martinje"
+      },
+      {
+        "day": "Sub 7",
+        "platform": "Instagram",
+        "format": "Reel",
+        "topic": "Studeno jutro u sobi: jacuzzi, pogled na Kvarner, à la carte doručak",
+        "goal": "Upiti za vikend boravak izvan sezone"
+      },
+      {
+        "day": "Pon 9",
+        "platform": "Instagram",
+        "format": "Carousel",
+        "topic": "„10 soba, 10 ličnosti“: soba Puccini i skladatelj na opatijskoj obali",
+        "goal": "Nastavak serije, spremanja i dijeljenja"
+      },
+      {
+        "day": "Uto 10",
+        "platform": "Facebook",
+        "format": "Post",
+        "topic": "Paket degustacija s Jurčićem i noćenje, objava na njemačkom za Austriju",
+        "goal": "Izvansezonske rezervacije DACH gostiju"
+      },
+      {
+        "day": "Sri 11",
+        "platform": "Instagram",
+        "format": "Story",
+        "topic": "Martinje uživo: krštenje mladog vina u podrumu Bevande",
+        "goal": "FOMO i rezervacije za vikend"
+      },
+      {
+        "day": "Čet 12",
+        "platform": "TikTok",
+        "format": "Reel",
+        "topic": "Kvarnerski škampi od mora do tanjura u 30 sekundi",
+        "goal": "Doseg mlađe gastro publike iz regije"
+      },
+      {
+        "day": "Sub 14",
+        "platform": "Facebook",
+        "format": "Carousel",
+        "topic": "Prosinački domjenci: restoran, podrum i svjetla Rijeke kao kulisa",
+        "goal": "Upiti HR timova za prosinac"
+      }
+    ]
+  },
+  "posts": {
+    "posts": [
+      {
+        "platform": "Instagram",
+        "format": "Reel",
+        "hook": "Bez rezervacije. Bez dress codea. Samo riva i vino.",
+        "caption": "Amore Sea Club. Isto mjesto, potpuno nova priča. 🌊\n\nDan na našoj rivi od 70 metara ide ovako:\n☕ jutarnja kava s pogledom na Kvarner\n🥗 lagani snack kad sunce najjače grije\n🥂 vina i pjenušci pod mjesečinom\n\nNovi koncept Wine&Cork posvećen je vinima i dobrom društvu. Nije ekskluzivno, nije ukočeno. Dođite kakvi jeste.\n\nVidimo se na rivi ispod Bevande? 👇",
+        "hashtags": [
+          "Opatija",
+          "AmoreSeaClub",
+          "Kvarner",
+          "OpatijskaRivijera",
+          "WineAndCork",
+          "VinoNaMoru",
+          "Rijeka",
+          "CroatiaSummer"
+        ],
+        "visualIdea": "Timelapse iz jednog kadra na rivi: kava u 8 h, snack u 14 h, čaše pjenušca pod mjesečinom. Rezovi u ritmu valova, završni kadar sa svjetlima Rijeke preko zaljeva.",
+        "cta": "Svratite večeras, stol vas čeka bez rezervacije.",
+        "bestTime": "Čet 18:00"
+      },
+      {
+        "platform": "Instagram",
+        "format": "Carousel",
+        "hook": "U Bevandi ne spavate u sobi 104. Spavate kod Joycea.",
+        "caption": "10 soba, 10 bezvremenskih ličnosti. ✨\n\nPisci, skladatelji, aristokrati i izvođači: svi su jednom birali Opatiju. Mi smo svakome dali vlastitu sobu.\n\nListajte i upoznajte prva dva stanara:\n📚 James Joyce Deluxe Suite\n🎼 Giacomo Puccini Deluxe Suite\n\nJacuzzi s pogledom zbog kojeg se osjećate kao na jahti, king size krevet, privatna terasa s ležaljkama i à la carte doručak uz more.\n\nKoju biste ličnost odabrali? Napišite u komentar 👇",
+        "hashtags": [
+          "Opatija",
+          "HotelBevanda",
+          "BoutiqueHotel",
+          "Kvarner",
+          "JamesJoyce",
+          "Puccini",
+          "ImpresiaHotels",
+          "LuxuryCroatia",
+          "CroatiaTravel"
+        ],
+        "visualIdea": "Slajd 1: vrata sobe s ugraviranim imenom. Zatim arhivski portret svake ličnosti uz današnji kadar sobe i jacuzzija s pogledom. Zadnji slajd: terasa u zalazak i tekst „Koja ste vi soba?“",
+        "cta": "Rezervirajte svoju ličnost putem linka u bio.",
+        "bestTime": "Ned 20:00"
+      },
+      {
+        "platform": "Facebook",
+        "format": "Post",
+        "hook": "750 vinskih etiketa. Jedan čovjek zna priču svake.",
+        "caption": "Naša vinska priča počela je 1971., zajedno s prvim restoranom Bevanda. 🍷\n\nDanas podrum broji više od 750 etiketa: rijetke berbe, proslavljene klasike i skrivene dragulje. Čuvar te kolekcije je Klaudio Jurčić, jedan od najboljih hrvatskih sommeliera.\n\nRecite mu što jedete i kakvo vam je raspoloženje. Ostalo prepustite njemu.\n\nUz to vas čekaju kvarnerski škampi, ostakljena sala i panoramski pogled na zaljev i svjetla Rijeke. 🌅\n\nPetak navečer, Opatija. Zvuči kao plan?",
+        "hashtags": [
+          "Opatija",
+          "RestoranBevanda",
+          "Kvarner",
+          "KvarnerskiŠkampi",
+          "VinskaKarta",
+          "Sommelier",
+          "FineDiningCroatia",
+          "Rijeka"
+        ],
+        "visualIdea": "Klaudio Jurčić u podrumu drži bocu rijetke berbe, iza njega police s etiketama, toplo prigušeno svjetlo. Druga fotografija: čaša vina uz škampe i svjetla Rijeke u pozadini.",
+        "cta": "Rezervirajte stol za vikend, link je u komentaru.",
+        "bestTime": "Sri 19:30"
+      }
+    ]
+  },
+  "ads": {
+    "ads": [
+      {
+        "platform": "Meta",
+        "angle": "10 soba, 10 ličnosti",
+        "headline": "Spavajte u sobi Jamesa Joycea",
+        "primaryText": "James Joyce i Giacomo Puccini birali su Opatiju. Danas njihova imena nose naši Deluxe suiteovi s jacuzzijem s pogledom na Kvarner, privatnom terasom i king size krevetom. Ujutro vas čeka à la carte doručak iznad mora. Samo 10 soba u prvom boutique hotelu s pet zvjezdica na sjevernom Jadranu. Koju ličnost birate?",
+        "description": "Boutique hotel s pet zvjezdica u Opatiji, član kolekcije IMPRESIA",
+        "cta": "Rezerviraj",
+        "audience": "Parovi od 35 do 60 godina iz Hrvatske, Slovenije i Austrije, interesi: luksuzna putovanja, boutique hoteli, godišnjice. Posjetitelje stranice izdvojite u zaseban retargeting.",
+        "budgetTip": "Krenite s 20 € dnevno na carousel soba, a 70 % budžeta usmjerite na vikend-termine izvan sezone."
+      },
+      {
+        "platform": "Meta",
+        "angle": "Wine&Cork na rivi",
+        "headline": "Čaša vina na rivi, bez rezervacije",
+        "primaryText": "Amore Sea Club na našoj rivi od 70 metara: jutarnja kava s pogledom na Kvarner, lagani snack popodne, a navečer pjenušac pod mjesečinom. Novi Wine&Cork koncept donosi vrhunska vina bez dress codea, rezervacija i pompe. Završite radni dan uz more. Samo svratite.",
+        "description": "Amore Sea Club, Bevanda Opatija. Otvoreno za sve.",
+        "cta": "Pokaži upute",
+        "audience": "Geotarget 25 km oko Opatije (Rijeka, Kastav, Lovran, Matulji), dob 28–55, interesi: vino, gastronomija, izlasci. Oglase prikazujte od Čet do Sub, 16–20 h.",
+        "budgetTip": "Dovoljno je 10–15 € dnevno samo od Čet do Sub, uz Reels zalaska sunca na rivi kao glavni kreativ."
+      },
+      {
+        "platform": "Google",
+        "angle": "Škampi i 750 vina",
+        "headline": "Restoran Bevanda od 1971.",
+        "primaryText": "Vinska karta sommeliera Klaudija Jurčića: rijetke berbe i skriveni dragulji.",
+        "description": "Kvarnerski škampi, 750+ vinskih etiketa i pogled na svjetla Rijeke. Rezervirajte stol.",
+        "cta": "Rezerviraj stol",
+        "audience": "Ključne riječi: restoran Opatija, fine dining Opatija, riblji restoran Kvarner, vinski restoran. Ciljajte Hrvatsku i Sloveniju te korisnike u krugu 30 km.",
+        "budgetTip": "Postavite 15 € dnevno s ciljanim CPA i povećajte ponude za 30 % Pet i Sub od 12 do 19 h."
+      }
+    ]
+  }
+}

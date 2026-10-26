@@ -41,7 +41,7 @@ function BrandBlock({ r, d }: { r: Partial_; d: Dict }) {
   return (
     <div className="grid gap-8 md:grid-cols-[1.3fr_1fr]">
       <div>
-        <p className="font-display text-3xl leading-tight font-medium text-sea-deep">{b.oneLiner}</p>
+        <p className="font-display text-2xl leading-snug font-medium text-sea-deep">{b.oneLiner}</p>
         <p className="mt-2 text-sm text-ink/60">
           {b.industry} — {b.location}
         </p>
@@ -222,12 +222,10 @@ function PlanBlock({ r, d }: { r: Partial_; d: Dict }) {
       <ol className="mt-5 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
         {p.items.map((it, i) => (
           <li key={i} className="flex flex-col rounded-lg border border-mist bg-white p-3">
-            <div className="flex items-center justify-between">
-              <span className="font-display font-semibold">{it.day}</span>
-              <span className={`rounded px-1.5 py-0.5 text-[11px] text-white ${platformColor[it.platform]}`}>
-                {it.platform} · {it.format}
-              </span>
-            </div>
+            <span className="font-display font-semibold">{it.day}</span>
+            <span className={`mt-1 self-start rounded px-1.5 py-0.5 text-[11px] whitespace-nowrap text-white ${platformColor[it.platform]}`}>
+              {it.platform} · {it.format}
+            </span>
             <p className="mt-2 text-sm leading-snug font-medium">{it.topic}</p>
             <p className="mt-auto pt-2 text-xs text-ink/55">{it.goal}</p>
           </li>

@@ -1,0 +1,360 @@
+{
+  "id": "78bc3b81",
+  "createdAt": "2026-10-26T15:23:19.017Z",
+  "lang": "en",
+  "source": "demo",
+  "durationMs": 38134,
+  "site": {
+    "url": "https://bevanda.hr/",
+    "title": "Bevanda Opatija - Hotel, Restoran, Bar",
+    "metaDescription": "Bevanda Opatija je jedinstveno mjesto na Jadranu: Boutique hotel s pet zvjezdica, Restoran i Bar s pogledom na more.",
+    "lang": "hr",
+    "headings": [
+      "Hotel Bevanda",
+      "Restoran Bevanda",
+      "Otkrijte jedinstvene ponude posebno pripremljene za Vaš čisti užitak",
+      "Bevanda nije samo hotel, to su uspomene u nastajanju",
+      "Bevanda je uvijek bila i ostala - jedinstveni Jadran",
+      "Amore Sea Club",
+      "Boutique Hotel",
+      "Restoran Bevanda",
+      "Amore Sea Club",
+      "Događanja"
+    ],
+    "images": [
+      "https://bevanda.hr/images/Bevanda-hotel-desktop-1.webp",
+      "https://bevanda.hr/images/Dorucak-1.webp",
+      "https://bevanda.hr/images/Superior-double-room.webp",
+      "https://bevanda.hr/images/Bevanda-avg-2023---Photo-Dean-Dubokovi%C4%8D-in-Nejc-Pernek-160.webp",
+      "https://bevanda.hr/images/Bevanda-restoran8.webp",
+      "https://bevanda.hr/images/Bevanda-avg-2023---Photo-Dean-Dubokovi%C4%8D-in-Nejc-Pernek-168.webp",
+      "https://bevanda.hr/images/Bevanda-hp-1.jpg",
+      "https://bevanda.hr/images/Bevanda-desktop-slide-2.webp"
+    ],
+    "logo": "https://d3e54v103j8qbb.cloudfront.net/plugins/Basic/assets/placeholder.60f9b1840c.svg",
+    "socials": [],
+    "pagesRead": 3,
+    "wordCount": 2444
+  },
+  "seoScore": 68,
+  "seoChecks": [
+    {
+      "id": "title",
+      "label": "Page title",
+      "pass": true,
+      "detail": "38 chars"
+    },
+    {
+      "id": "meta",
+      "label": "Meta description",
+      "pass": true,
+      "detail": "116 chars"
+    },
+    {
+      "id": "h1",
+      "label": "Single H1 heading",
+      "pass": false,
+      "detail": "6 × H1"
+    },
+    {
+      "id": "alt",
+      "label": "Image alt text",
+      "pass": true,
+      "detail": "5/48 missing alt"
+    },
+    {
+      "id": "https",
+      "label": "HTTPS",
+      "pass": true,
+      "detail": "OK"
+    },
+    {
+      "id": "viewport",
+      "label": "Mobile viewport",
+      "pass": true,
+      "detail": "OK"
+    },
+    {
+      "id": "og",
+      "label": "Open Graph (social sharing)",
+      "pass": false,
+      "detail": "incomplete"
+    },
+    {
+      "id": "lang",
+      "label": "Language attribute",
+      "pass": true,
+      "detail": "hr"
+    },
+    {
+      "id": "canonical",
+      "label": "Canonical link",
+      "pass": false,
+      "detail": "missing"
+    },
+    {
+      "id": "schema",
+      "label": "Structured data (Schema.org)",
+      "pass": false,
+      "detail": "none"
+    }
+  ],
+  "brand": {
+    "businessName": "Bevanda Opatija",
+    "oneLiner": "Five-star boutique hotel, fine-dining restaurant since 1971 and Amore Sea Club on Opatija's waterfront.",
+    "industry": "Luxury hospitality – boutique hotel, fine dining & seaside bar",
+    "location": "Opatija, Kvarner, Croatia",
+    "audiences": [
+      {
+        "name": "Affluent Austrian & German couples",
+        "description": "Romantic short-breakers driving from Vienna and Munich for shoulder-season weekends, booking Puccini or Joyce suites with jacuzzi and sea-view terrace."
+      },
+      {
+        "name": "Wine-loving gourmets",
+        "description": "Domestic and Slovenian foodies who travel for 750+ labels curated by sommelier Klaudio Jurčić and Kvarner scampi in the glass dining room."
+      },
+      {
+        "name": "Wedding & corporate planners",
+        "description": "Couples planning intimate seaside weddings and Rijeka/Zagreb companies booking client dinners, presentations and DJ team-buildings on the 70-metre riva."
+      }
+    ],
+    "toneOfVoice": [
+      "Heritage-proud",
+      "Indulgent",
+      "Elegant",
+      "Warm",
+      "Unhurried"
+    ],
+    "usps": [
+      "First five-star boutique hotel in the northern Adriatic, just 10 rooms",
+      "Each room named after a famous Opatija guest, like James Joyce or Puccini",
+      "750+ wine labels curated by top Croatian sommelier Klaudio Jurčić",
+      "Restaurant since 1971 with private 70m riva and free SUPs and kayaks"
+    ],
+    "opportunities": [
+      "No social profiles linked anywhere, despite the site asking guests to share moments. Launch Instagram built around the 10 famous-guest rooms, scampi plates and Amore sunsets over Rijeka's lights.",
+      "Klaudio Jurčić is invisible beyond one paragraph. Run monthly 'Cellar with Klaudio' Reels and off-season wine-pairing dinners advertised to Zagreb, Ljubljana and Graz to fill November–March.",
+      "Amore Sea Club's 'no dress code, no reservation' Wine&Cork concept needs its own local audience. Geo-targeted Meta ads to Opatija/Rijeka residents promoting aperitivo hours would drive walk-in traffic."
+    ]
+  },
+  "seo": {
+    "summary": "Bevanda has a strong story (since 1971, 10 famous-guest rooms, 750+ wines) and solid basics, but no schema, no canonical and six H1s make it hard for Google to tell hotel, restaurant and sea club apart. The biggest wins are structured data, clean HR/EN/DE signals for Austrian and German guests, and separate local listings for each of the three businesses.",
+    "recommendations": [
+      {
+        "issue": "No Schema.org structured data",
+        "fix": "Add JSON-LD: Hotel (starRating 5, 10 rooms, amenities like free SUP/kayak), Restaurant (servesCuisine, menu URL, acceptsReservations, foundingDate 1971) and Event markup for weddings and corporate events.",
+        "impact": "high"
+      },
+      {
+        "issue": "Missing canonical and hreflang across HR/EN/DE versions",
+        "fix": "Add a self-referencing canonical on every page plus hreflang tags for hr, en, de and x-default, so Vienna and Munich searches land on the German pages.",
+        "impact": "high"
+      },
+      {
+        "issue": "Hotel, restaurant and Amore compete under one local listing",
+        "fix": "Run three Google Business Profiles: Hotel Bevanda, Restoran Bevanda, Amore Sea Club. Post weekly scampi, wine list and riva sunset photos, and reply to reviews in German and English.",
+        "impact": "high"
+      },
+      {
+        "issue": "No landing pages for weddings, wine and Amore",
+        "fix": "Create dedicated pages for 'Wedding venue Opatija', 'Wine cellar with Klaudio Jurčić' and 'Amore Sea Club Wine&Cork', each 400+ words with FAQs, photos and an inquiry form.",
+        "impact": "medium"
+      },
+      {
+        "issue": "Six H1 tags and incomplete Open Graph tags",
+        "fix": "Keep one H1, 'Bevanda Opatija – 5-star boutique hotel and restaurant', and make the rest H2s. Add og:title, og:description and an og:image of the glass dining room at dusk.",
+        "impact": "medium"
+      }
+    ],
+    "suggestedTitle": "Bevanda Opatija – 5-Star Boutique Hotel & Restaurant",
+    "suggestedMetaDescription": "10 sea-view rooms named after Joyce and Puccini, fine dining since 1971, 750+ wines and Amore Sea Club on a private riva in Opatija. Book direct.",
+    "keywords": [
+      "boutique hotel Opatija",
+      "luxury hotel Opatija",
+      "best restaurant Opatija",
+      "restoran Opatija",
+      "Hotel Opatija Meerblick",
+      "wedding venue Opatija",
+      "wine bar Opatija",
+      "5 star hotel Kvarner"
+    ]
+  },
+  "plan": {
+    "strategy": "With Amore's summer crowd gone, November is about giving Vienna, Munich, Zagreb and Ljubljana reasons to drive to Opatija: Klaudio's cellar, the famous-guest suites and Kvarner scampi. We launch Instagram from zero around these stories, use Martinje on 11 November as the wine hook, and push December corporate dinners and Advent weekends while calendars are still open. Hotel posts get German captions for the Austrian and German markets.",
+    "pillars": [
+      "Famous Guests: heritage stories behind the 10 named rooms",
+      "Cellar with Klaudio: 750+ labels, pairings, Martinje",
+      "Kvarner on the Plate: scampi and the glass dining room",
+      "Celebrate at Bevanda: Christmas dinners, Advent stays, 2027 weddings"
+    ],
+    "items": [
+      {
+        "day": "Mon 2",
+        "platform": "Instagram",
+        "format": "Carousel",
+        "topic": "The Joyce Suite: why James Joyce's name is on our door",
+        "goal": "Launch famous-guest series, drive direct suite bookings"
+      },
+      {
+        "day": "Tue 3",
+        "platform": "TikTok",
+        "format": "Reel",
+        "topic": "Klaudio Jurčić picks one bottle from 750 labels in 30 seconds",
+        "goal": "Introduce the sommelier to new wine audiences"
+      },
+      {
+        "day": "Thu 5",
+        "platform": "Facebook",
+        "format": "Post",
+        "topic": "Company Christmas dinners on the riva: December dates going fast",
+        "goal": "Generate Rijeka and Zagreb corporate inquiries"
+      },
+      {
+        "day": "Fri 6",
+        "platform": "Instagram",
+        "format": "Story",
+        "topic": "Poll: Puccini or Joyce suite for your November weekend?",
+        "goal": "Spark DMs and weekend booking requests"
+      },
+      {
+        "day": "Sun 8",
+        "platform": "Instagram",
+        "format": "Reel",
+        "topic": "Kvarner scampi, from the sea to the glass dining room",
+        "goal": "Fill Sunday lunch reservations"
+      },
+      {
+        "day": "Tue 10",
+        "platform": "Facebook",
+        "format": "Post",
+        "topic": "Martinje dinner tomorrow: young wines paired by Klaudio",
+        "goal": "Sell remaining seats for 11 November dinner"
+      },
+      {
+        "day": "Wed 11",
+        "platform": "Instagram",
+        "format": "Reel",
+        "topic": "Martinje in the cellar: Klaudio uncorks this year's young wines",
+        "goal": "Ride St. Martin's buzz, grow local followers"
+      },
+      {
+        "day": "Thu 12",
+        "platform": "TikTok",
+        "format": "Reel",
+        "topic": "Bura outside, warm jacuzzi inside: an off-season Bevanda weekend",
+        "goal": "Sell winter escapes to Vienna and Munich couples"
+      },
+      {
+        "day": "Sat 14",
+        "platform": "Instagram",
+        "format": "Carousel",
+        "topic": "Saying yes on our 70-metre riva: planning a 2027 wedding",
+        "goal": "Capture early 2027 wedding inquiries"
+      },
+      {
+        "day": "Sun 15",
+        "platform": "Facebook",
+        "format": "Story",
+        "topic": "Advent in Opatija: suite weekends with dinner now bookable",
+        "goal": "Open December leisure bookings early"
+      }
+    ]
+  },
+  "posts": {
+    "posts": [
+      {
+        "platform": "Instagram",
+        "format": "Reel",
+        "hook": "750 labels. One sommelier. Which bottle meets our scampi?",
+        "caption": "Klaudio Jurčić knows Bevanda's cellar like his own handwriting, so he answers this one without blinking.\n\nKvarner scampi are the sweetest in the Adriatic. They need a wine that steps aside and lets them talk. Watch what he pulls from the shelf 🍷\n\nOur wine story began in 1971. Today it runs to more than 750 labels: rare vintages, proper classics and a few quiet surprises.\n\nAsk for Klaudio when you book. He'll take it from there.",
+        "hashtags": [
+          "Bevanda",
+          "BevandaOpatija",
+          "Opatija",
+          "Kvarner",
+          "KvarnerScampi",
+          "CroatianWine",
+          "SommelierLife",
+          "WinePairing",
+          "FineDiningCroatia"
+        ],
+        "visualIdea": "Handheld follow of Klaudio walking the cellar, fingers tracing bottles, pulling one. Cut to scampi plated in the glass dining room, slow pour, Rijeka lights behind. Ends on his nod.",
+        "cta": "Book a table and ask Klaudio to pour – link in bio.",
+        "bestTime": "Thu 19:30"
+      },
+      {
+        "platform": "Instagram",
+        "format": "Carousel",
+        "hook": "Puccini has a room in Opatija. So does Joyce.",
+        "caption": "Writers, composers, aristocrats, performers: they all chose Opatija. At Bevanda, ten of them have a room named after them.\n\nSwipe to step inside 👉\n\n🎼 Giacomo Puccini Deluxe Suite – king bed, private terrace, separate bedroom and living room\n🖋️ James Joyce Deluxe Suite – a jacuzzi view that feels like a yacht deck\n🌊 Every room – direct sea view, private terrace, à la carte breakfast\n\nThe first five-star boutique hotel in the northern Adriatic. Ten rooms, ten personalities.\n\nWhich one would you check into?",
+        "hashtags": [
+          "BevandaOpatija",
+          "Opatija",
+          "Kvarner",
+          "BoutiqueHotel",
+          "ImpresiaHotels",
+          "LuxuryCroatia",
+          "JamesJoyce",
+          "Puccini",
+          "SeaViewSuite"
+        ],
+        "visualIdea": "Slide 1: Puccini suite terrace at golden hour, name overlay. Next slides: Joyce suite jacuzzi view, door nameplates, terrace breakfast, minibar detail. Final slide: Kvarner Bay seen from the bed.",
+        "cta": "Tell us your pick in the comments, then book your suite via link in bio.",
+        "bestTime": "Sun 20:00"
+      },
+      {
+        "platform": "Facebook",
+        "format": "Post",
+        "hook": "No dress code. No reservation. Just a glass on the riva.",
+        "caption": "Opatija and Rijeka, this one's for you 👋\n\nAmore Sea Club at Bevanda sits on our own 70-metre riva, and it's far less formal than you'd think. Wine&Cork is our new concept: great wines, sparkling by the glass and proper bites, right by the water.\n\n☕ Morning coffee facing Kvarner\n🥂 Evening wines and bubbles under the moon\n\nCome straight from work or straight from the beach. Bring friends. Stay as long as the sunset does.",
+        "hashtags": [
+          "AmoreSeaClub",
+          "BevandaOpatija",
+          "Opatija",
+          "Rijeka",
+          "Kvarner",
+          "WineAndCork",
+          "AperitivoTime",
+          "OpatijaRiviera"
+        ],
+        "visualIdea": "Wide shot of the riva at sunset: two locals in casual summer clothes clinking sparkling wine at the edge, Rijeka lights starting to glow across the bay.",
+        "cta": "Drop by tonight, no booking needed. Tag who you're bringing.",
+        "bestTime": "Fri 17:00"
+      }
+    ]
+  },
+  "ads": {
+    "ads": [
+      {
+        "platform": "Meta",
+        "angle": "Sleep with Opatija's legends",
+        "headline": "Sleep in James Joyce's Suite",
+        "primaryText": "Joyce and Puccini both chose Opatija. At Bevanda, their names are on the door. Just 10 rooms, each with a private sea-view terrace and a hot tub facing Kvarner Bay. Breakfast is à la carte, cooked by a restaurant open since 1971. SUPs and kayaks on our riva are free. The northern Adriatic's first five-star boutique hotel.",
+        "description": "10 rooms, 10 famous guests. Opatija since 1971.",
+        "cta": "Book Now",
+        "audience": "Couples aged 35–65 in Vienna, Graz, Munich and Ljubljana interested in luxury travel, boutique hotels and fine wine. Run German and English versions.",
+        "budgetTip": "Spend most in April–June and September–October, pushing weekend stays when shoulder-season rooms are easiest to fill."
+      },
+      {
+        "platform": "Meta",
+        "angle": "Amore walk-in aperitivo",
+        "headline": "No Dress Code. Just Wine by the Sea",
+        "primaryText": "Amore Sea Club is open to everyone. No reservation, no dress code, no fuss. Morning coffee on our 70-metre riva, a light snack in the afternoon, sparkling wine under the moon. Try the new Wine&Cork concept from the house that keeps 750+ labels. Same Bevanda, new story. See you on the riva.",
+        "description": "Amore Sea Club, on Bevanda's riva in Opatija. Walk right in.",
+        "cta": "Get Directions",
+        "audience": "Residents aged 25–55 within 15 km of Opatija (Rijeka, Lovran, Matulji, Kastav), plus people currently travelling in Kvarner, interested in wine, aperitivo and beach bars.",
+        "budgetTip": "Keep it small, €10–15 a day, shown Thursday to Saturday from 4 to 8pm with sunset Reels."
+      },
+      {
+        "platform": "Google",
+        "angle": "Wine cellar fine dining",
+        "headline": "Bevanda: 750+ Wines, Opatija",
+        "primaryText": "Glass dining room with panoramic views over Kvarner Bay and the lights of Rijeka.",
+        "description": "Kvarner scampi and a cellar curated by sommelier Klaudio Jurčić. Fine dining since 1971.",
+        "cta": "Reserve a Table",
+        "audience": "Keywords like 'best restaurant Opatija', 'fine dining Opatija', 'restoran Opatija' and 'seafood Kvarner'. Target Kvarner, Istria, Zagreb, Ljubljana and visitors in Opatija.",
+        "budgetTip": "Raise mobile bids 5–9pm within Opatija, when tourists pick dinner, and keep cheap branded 'Bevanda' terms always on."
+      }
+    ]
+  }
+}

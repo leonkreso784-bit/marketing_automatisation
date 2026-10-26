@@ -2,25 +2,25 @@ import { z } from "zod";
 
 export const BrandSchema = z.object({
   businessName: z.string(),
-  oneLiner: z.string().describe("One sentence describing what the business is"),
+  oneLiner: z.string().describe("One short sentence, max 20 words"),
   industry: z.string(),
   location: z.string(),
   audiences: z
-    .array(z.object({ name: z.string(), description: z.string() }))
+    .array(z.object({ name: z.string().describe("max 6 words"), description: z.string().describe("1-2 sentences, max 35 words") }))
     .describe("3 target audience segments"),
   toneOfVoice: z.array(z.string()).describe("4-5 adjectives"),
-  usps: z.array(z.string()).describe("3-4 unique selling points"),
+  usps: z.array(z.string()).describe("3-4 unique selling points, max 15 words each"),
   opportunities: z
     .array(z.string())
-    .describe("3 concrete marketing opportunities the business is missing"),
+    .describe("3 concrete marketing opportunities the business is missing, each 1-2 sentences, max 35 words"),
 });
 
 export const SeoAiSchema = z.object({
-  summary: z.string(),
+  summary: z.string().describe("max 2 sentences"),
   recommendations: z.array(
     z.object({
-      issue: z.string(),
-      fix: z.string(),
+      issue: z.string().describe("max 12 words"),
+      fix: z.string().describe("1-2 concrete sentences, max 40 words"),
       impact: z.enum(["high", "medium", "low"]),
     }),
   ),
@@ -37,8 +37,8 @@ export const PlanSchema = z.object({
       day: z.string().describe("e.g. 'Pon 1' / 'Mon 1'"),
       platform: z.enum(["Instagram", "Facebook", "TikTok", "LinkedIn"]),
       format: z.enum(["Reel", "Carousel", "Post", "Story"]),
-      topic: z.string(),
-      goal: z.string(),
+      topic: z.string().describe("max 12 words"),
+      goal: z.string().describe("max 10 words"),
     }),
   ),
 });
@@ -48,12 +48,12 @@ export const PostsSchema = z.object({
     z.object({
       platform: z.enum(["Instagram", "Facebook", "TikTok"]),
       format: z.enum(["Reel", "Carousel", "Post"]),
-      hook: z.string().describe("First line that stops the scroll"),
-      caption: z.string(),
+      hook: z.string().describe("First line that stops the scroll, max 10 words"),
+      caption: z.string().describe("max 90 words"),
       hashtags: z.array(z.string()),
-      visualIdea: z.string(),
+      visualIdea: z.string().describe("1-2 sentences, max 35 words"),
       cta: z.string(),
-      bestTime: z.string(),
+      bestTime: z.string().describe("e.g. 'Čet 19:30'"),
     }),
   ),
 });
@@ -62,13 +62,13 @@ export const AdsSchema = z.object({
   ads: z.array(
     z.object({
       platform: z.enum(["Meta", "Google"]),
-      angle: z.string().describe("Short name of the creative angle"),
+      angle: z.string().describe("Short name of the creative angle, max 5 words"),
       headline: z.string(),
-      primaryText: z.string(),
-      description: z.string(),
+      primaryText: z.string().describe("The ad body text the user sees. Meta: max 60 words. Google: one extra description line, max 90 chars"),
+      description: z.string().describe("max 90 chars"),
       cta: z.string(),
-      audience: z.string().describe("Targeting suggestion"),
-      budgetTip: z.string(),
+      audience: z.string().describe("Targeting suggestion, 1-2 sentences, max 35 words"),
+      budgetTip: z.string().describe("1 sentence, max 25 words"),
     }),
   ),
 });

@@ -28,7 +28,8 @@ Rules:
 - Be specific to THIS business: use real names, places, offers and details from the website. Never write generic filler.
 - Think about the local context (Kvarner, Opatija, tourism seasonality, domestic + foreign guests) when it is relevant to the business.
 - Write like a sharp human copywriter, not like an AI. No clichés like "unlock", "elevate", "discover the magic".
-- Everything you write must be usable as-is by the agency tomorrow morning.`;
+- Everything you write must be usable as-is by the agency tomorrow morning.
+- Be concise: this is shown on screen in a live demo. Respect the word limits in the schema; one sharp detail beats three average ones.`;
 
 function langLine(lang: Lang) {
   return lang === "hr"
