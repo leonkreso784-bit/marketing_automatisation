@@ -5,8 +5,9 @@ export type StepState = { status: "idle" | "running" | "done" | "error" | "skipp
 
 const GATHER: StepId[] = ["research", "scrape"];
 const PARALLEL: StepId[] = ["seo", "plan", "posts", "ads"];
-// A failed website read is not fatal: web research covers for it.
-const SOFT_FAIL: StepId[] = ["scrape"];
+// Research and the website read cover for each other, so one failing is not fatal.
+// If both fail the run stops and the error banner explains why.
+const SOFT_FAIL: StepId[] = ["research", "scrape"];
 
 function fmt(ms?: number) {
   if (ms === undefined) return "";

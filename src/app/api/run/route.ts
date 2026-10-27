@@ -13,12 +13,20 @@ export async function POST(req: Request) {
   if (code && req.headers.get("x-access-code") !== code) {
     return Response.json({ error: "Access code required" }, { status: 401 });
   }
-  const { url: rawInput, lang = "hr" } = (await req.json()) as { url?: string; lang?: Lang };
-  const input = rawInput?.trim() ?? "";
+  const body = (await req.json().catch(() => null)) as { url?: unknown; lang?: unknown } | null;
+  const input = typeof body?.url === "string" ? body.url.trim() : "";
+  const lang: Lang = body?.lang === "en" ? "en" : "hr";
   if (!input || input.length > 2000) return Response.json({ error: "Enter a website or a business name" }, { status: 400 });
 
   const isUrl = looksLikeUrl(input);
-  const target = isUrl ? normalizeUrl(input) : input;
+  let target = input;
+  if (isUrl) {
+    try {
+      target = normalizeUrl(input);
+    } catch {
+      return Response.json({ error: "Invalid URL" }, { status: 400 });
+    }
+  }
 
   const stream = new ReadableStream({
     async start(controller) {

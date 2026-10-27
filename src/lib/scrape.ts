@@ -69,11 +69,11 @@ const agent = new Agent({ connect: { lookup: safeLookup as never } });
 
 function assertAllowedUrl(url: string) {
   const { hostname, protocol, port } = new URL(url);
-  if (!["http:", "https:"].includes(protocol)) throw new Error("Invalid URL");
-  if (port && !["80", "443"].includes(port)) throw new Error(`Port not allowed: ${port}`);
+  if (!["http:", "https:"].includes(protocol)) throw new ScrapeError("notallowed", "Invalid URL");
+  if (port && !["80", "443"].includes(port)) throw new ScrapeError("notallowed", `Port not allowed: ${port}`);
   const host = hostname.replace(/^\[|\]$/g, "");
   // IP literals skip DNS lookup, so check them here.
-  if (isIP(host) && !isPublicIp(host)) throw new Error(`Address not allowed: ${hostname}`);
+  if (isIP(host) && !isPublicIp(host)) throw new ScrapeError("notallowed", `Address not allowed: ${hostname}`);
 }
 
 async function fetchHtml(url: string): Promise<string> {
@@ -112,7 +112,7 @@ async function fetchHtml(url: string): Promise<string> {
 const MAX_BYTES = 3 * 1024 * 1024;
 
 async function readCapped(res: Response): Promise<string> {
-  if (Number(res.headers.get("content-length") ?? 0) > MAX_BYTES) throw new Error("Page is too large");
+  if (Number(res.headers.get("content-length") ?? 0) > MAX_BYTES) throw new ScrapeError("unreachable", "Page is too large");
   if (!res.body) return "";
   const reader = res.body.getReader();
   const chunks: Uint8Array[] = [];

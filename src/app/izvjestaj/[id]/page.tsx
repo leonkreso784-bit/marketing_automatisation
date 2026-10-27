@@ -20,7 +20,15 @@ export default async function ReportPage({ params }: { params: Promise<{ id: str
   } catch {
     notFound();
   }
-  const report = ReportSchema.parse(JSON.parse(raw));
+  let json: unknown;
+  try {
+    json = JSON.parse(raw);
+  } catch {
+    notFound();
+  }
+  const parsed = ReportSchema.safeParse(json);
+  if (!parsed.success) notFound();
+  const report = parsed.data;
   const d = t[report.lang];
 
   return (

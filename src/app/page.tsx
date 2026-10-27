@@ -26,6 +26,7 @@ export default function Home() {
   const [error, setError] = useState("");
   const [elapsed, setElapsed] = useState(0);
   const [translating, setTranslating] = useState(false);
+  const [translateFailed, setTranslateFailed] = useState(false);
   const startRef = useRef(0);
   const d = t[lang];
 
@@ -57,6 +58,7 @@ export default function Home() {
     setSteps(idle());
     setReport({});
     setError("");
+    setTranslateFailed(false);
     setElapsed(0);
     startRef.current = Date.now();
     setPhase("running");
@@ -64,22 +66,30 @@ export default function Home() {
 
   // Switching language also switches the finished report, so the whole page is in one language.
   async function setLang(next: Lang) {
+    const prev = lang;
     setLangState(next);
+    setTranslateFailed(false);
     if (phase !== "done" || !report.lang || report.lang === next) return;
     const full = report as Report;
-    if (full.source === "demo") {
-      const res = await fetch(`/demo-report-${next}.json`);
-      setReport({ ...((await res.json()) as Report), durationMs: full.durationMs });
-      return;
-    }
     setTranslating(true);
     try {
+      if (full.source === "demo") {
+        const res = await fetch(`/demo-report-${next}.json`);
+        if (!res.ok) throw new Error("demo");
+        setReport({ ...((await res.json()) as Report), durationMs: full.durationMs });
+        return;
+      }
       const res = await fetch("/api/translate", {
         method: "POST",
         headers: { "content-type": "application/json", "x-access-code": accessCode() },
         body: JSON.stringify({ report: full, lang: next }),
       });
-      if (res.ok) setReport((await res.json()) as Report);
+      if (!res.ok) throw new Error("translate");
+      setReport((await res.json()) as Report);
+    } catch {
+      // Keep the page in one language: go back to the language the report is in.
+      setLangState(prev);
+      setTranslateFailed(true);
     } finally {
       setTranslating(false);
     }
@@ -116,7 +126,12 @@ export default function Home() {
 
   // Replays a saved report with realistic timing, for when the network or API is unavailable.
   async function demo() {
-    const res = await fetch(`/demo-report-${lang}.json`);
+    const res = await fetch(`/demo-report-${lang}.json`).catch(() => null);
+    if (!res?.ok) {
+      setError("generic");
+      setPhase("error");
+      return;
+    }
     const saved = (await res.json()) as Report;
     setUrl(saved.site.url);
     reset();
@@ -149,6 +164,7 @@ export default function Home() {
     <div className="min-h-screen">
       <Header lang={lang} setLang={phase === "running" || translating ? undefined : setLang}>
         {translating && <span className="animate-pulse text-sm text-ink/60">{d.translating}</span>}
+        {translateFailed && !translating && <span className="text-sm text-flag">{d.translateError}</span>}
         {phase === "done" && !translating && (
           <button onClick={() => window.print()} className="rounded-full border border-ink/25 px-4 py-1.5 text-sm hover:bg-white">
             {d.pdf}

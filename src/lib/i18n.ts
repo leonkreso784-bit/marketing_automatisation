@@ -65,6 +65,7 @@ export const t = {
     sources: "Izvori koje je AI pročitao",
     accessError: "Pristupni kod nedostaje ili je kriv. Otvorite link koji ste dobili (s ?kod=…).",
     translating: "Prevodim…",
+    translateError: "Prijevod nije uspio. Pokušajte ponovno.",
     checkLabels: {
       title: "Naslov stranice (title)",
       meta: "Meta opis",
@@ -145,6 +146,7 @@ export const t = {
     sources: "Sources the AI read",
     accessError: "The access code is missing or wrong. Open the link you were given (with ?kod=…).",
     translating: "Translating…",
+    translateError: "Translation failed. Please try again.",
     checkLabels: {
       title: "Page title",
       meta: "Meta description",

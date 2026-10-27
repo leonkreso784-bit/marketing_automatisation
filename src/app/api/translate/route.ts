@@ -8,9 +8,9 @@ export async function POST(req: Request) {
   if (code && req.headers.get("x-access-code") !== code) {
     return Response.json({ error: "Access code required" }, { status: 401 });
   }
-  const body = (await req.json()) as { report?: unknown; lang?: Lang };
-  const parsed = ReportSchema.safeParse(body.report);
-  if (!parsed.success || (body.lang !== "hr" && body.lang !== "en")) {
+  const body = (await req.json().catch(() => null)) as { report?: unknown; lang?: Lang } | null;
+  const parsed = ReportSchema.safeParse(body?.report);
+  if (!body || !parsed.success || (body.lang !== "hr" && body.lang !== "en")) {
     return Response.json({ error: "Invalid report" }, { status: 400 });
   }
   const report = parsed.data;
